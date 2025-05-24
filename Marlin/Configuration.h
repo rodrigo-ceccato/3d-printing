@@ -2849,6 +2849,7 @@
 //
 #define REPRAP_DISCOUNT_SMART_CONTROLLER
 
+
 //
 // GT2560 (YHCB2004) LCD Display
 //
@@ -3005,7 +3006,7 @@
 // RepRapDiscount FULL GRAPHIC Smart Controller
 // https://reprap.org/wiki/RepRapDiscount_Full_Graphic_Smart_Controller
 //
-//#define REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER
+// #define REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER
 
 //
 // K.3D Full Graphic Smart Controller
