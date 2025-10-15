@@ -1,0 +1,13 @@
+# OrcaSlicer temp/cache files
+cache/
+logs/
+*backup*
+*.tmp
+*.lock
+*.json
+user.config
+
+# Ignore compiled, system, or OS files
+.DS_Store
+Thumbs.db
+
