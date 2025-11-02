@@ -1,0 +1,1 @@
+ln -s /home/fopor/Software/marlin/Marlin-2.1.3-b2/orca/OrcaSlicer/user /home/fopor/.config/OrcaSlicer
