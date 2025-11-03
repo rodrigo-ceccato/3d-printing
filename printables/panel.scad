@@ -1,12 +1,12 @@
 // --- Panel Parameters
 plate_w = 220; //mm
-plate_h = 80;
+plate_h = 60;
 plate_t = 3;
 corner_r = 3;
 
 // --- Cutout parameters
 edge = 8;
-lcd_w = 80;
+lcd_w = 120;
 lcd_h = 50;
 lcd_y = 0;
 lcd_x = -plate_w/2 + edge + lcd_w/2;
