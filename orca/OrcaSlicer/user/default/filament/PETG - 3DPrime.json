@@ -1,0 +1,43 @@
+{
+    "default_filament_colour": [
+        "#FFFFFF"
+    ],
+    "enable_pressure_advance": [
+        "1"
+    ],
+    "filament_cost": [
+        "120"
+    ],
+    "filament_end_gcode": [
+        "; filament end gcode\nM306 H0.0056"
+    ],
+    "filament_max_volumetric_speed": [
+        "10"
+    ],
+    "filament_retraction_length": [
+        "0.5"
+    ],
+    "filament_settings_id": [
+        "PETG - 3DPrime"
+    ],
+    "filament_start_gcode": [
+        "; Filament gcode\nM306 H0.0036"
+    ],
+    "filament_vendor": [
+        "3DPrime"
+    ],
+    "from": "User",
+    "inherits": "Generic PETG @System",
+    "is_custom_defined": "0",
+    "name": "PETG - 3DPrime",
+    "nozzle_temperature": [
+        "240"
+    ],
+    "nozzle_temperature_initial_layer": [
+        "240"
+    ],
+    "pressure_advance": [
+        "0.06"
+    ],
+    "version": "2.3.0.3"
+}

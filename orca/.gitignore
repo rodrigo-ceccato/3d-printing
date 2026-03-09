@@ -4,10 +4,12 @@ logs/
 *backup*
 *.tmp
 *.lock
-*.json
 user.config
+
+# Ignore bundled Orca system library files, but keep custom/user presets
+OrcaSlicer/system/OrcaFilamentLibrary/
+OrcaSlicer/system/OrcaFilamentLibrary.json
 
 # Ignore compiled, system, or OS files
 .DS_Store
 Thumbs.db
-

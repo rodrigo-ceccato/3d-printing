@@ -1,0 +1,28 @@
+{
+    "default_filament_colour": [
+        "#FFFFFF"
+    ],
+    "filament_settings_id": [
+        "3D Fila branco"
+    ],
+    "filament_vendor": [
+        "3D Fila"
+    ],
+    "from": "User",
+    "inherits": "Generic PLA @System",
+    "is_custom_defined": "0",
+    "name": "3D Fila branco",
+    "nozzle_temperature": [
+        "190"
+    ],
+    "nozzle_temperature_initial_layer": [
+        "200"
+    ],
+    "nozzle_temperature_range_high": [
+        "220"
+    ],
+    "pressure_advance": [
+        "0.052"
+    ],
+    "version": "2.3.0.3"
+}
