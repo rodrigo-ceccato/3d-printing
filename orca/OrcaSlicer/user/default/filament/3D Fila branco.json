@@ -2,6 +2,12 @@
     "default_filament_colour": [
         "#FFFFFF"
     ],
+    "enable_pressure_advance": [
+        "1"
+    ],
+    "filament_flow_ratio": [
+        "0.95"
+    ],
     "filament_settings_id": [
         "3D Fila branco"
     ],
@@ -23,6 +29,9 @@
     ],
     "pressure_advance": [
         "0.052"
+    ],
+    "slow_down_layer_time": [
+        "1"
     ],
     "version": "2.3.0.3"
 }

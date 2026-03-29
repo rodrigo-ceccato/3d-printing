@@ -168,6 +168,7 @@
 //#define W_DRIVER_TYPE  A4988
 // #define E0_DRIVER_TYPE TMC2209_STANDALONE
 #define E0_DRIVER_TYPE A4988
+// #define E0_DRIVER_TYPE TMC2209_STANDALONE
 //#define E1_DRIVER_TYPE A4988
 //#define E2_DRIVER_TYPE A4988
 //#define E3_DRIVER_TYPE A4988
@@ -1885,10 +1886,10 @@
 
 
 // Travel limits (linear=mm, rotational=°) after homing, corresponding to endstop positions.
-#define X_MIN_POS 0
-#define X_MAX_POS 192
-#define Y_MIN_POS 8
-#define Y_MAX_POS 207
+#define X_MIN_POS -20
+#define X_MAX_POS 190
+#define Y_MIN_POS 0
+#define Y_MAX_POS 200
 #define Z_MIN_POS 0
 #define Z_MAX_POS 150
 //#define I_MIN_POS 0

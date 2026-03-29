@@ -7,6 +7,7 @@ This repository contains Marlin firmware and OrcaSlicer presets for a DIY Graber
 - Board: MKS TinyBee
 - Firmware constraint: do not recommend `LIN_ADVANCE`; this board/setup does not support it in the user's environment.
 - The repo owner is the only user of this repository, so tracking live OrcaSlicer user presets is intentional.
+- `mks_tinybee` builds with `ESP3D_WIFISUPPORT` should keep `AsyncTCP` pinned to `me-no-dev/AsyncTCP@3.3.2` and `ESP Async WebServer` pinned to `sbkila/ESP Async WebServer@1.2.3`; newer unpinned packages can break against the old ESP32 Arduino core with missing watchdog config symbols such as `CONFIG_ESP_TASK_WDT_TIMEOUT_S`.
 
 ## Orca / Preset Context
 

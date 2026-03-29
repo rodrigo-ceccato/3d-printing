@@ -1,7 +1,6 @@
 {
     "brim_type": "no_brim",
     "default_jerk": "6",
-    "enable_support": "1",
     "from": "User",
     "infill_jerk": "6",
     "inherits": "0.20mm Standard @MyMarlin",
@@ -24,9 +23,9 @@
     "support_threshold_angle": "15",
     "support_type": "tree(auto)",
     "top_surface_jerk": "6",
-    "travel_acceleration": "2000",
+    "travel_acceleration": "3000",
     "travel_jerk": "6",
-    "travel_speed": "170",
+    "travel_speed": "300",
     "version": "2.3.1.10",
     "xy_hole_compensation": "0.005"
 }
