@@ -13,6 +13,13 @@ This repository contains Marlin firmware and OrcaSlicer presets for a DIY Graber
 
 - Track both `orca/OrcaSlicer/system/Custom/` and `orca/OrcaSlicer/user/default/` because they contain the real working machine, filament, and process presets.
 - Keep bundled stock Orca filament library content ignored unless there is a specific reason to version it.
+- For Orca's native `ESP3D` print host, set `print_host` to the bare host or IP without `http://`; use `print_host_webui` for the full browser URL if you want one-click access to the web interface as well.
+- Current `StarGraber` ESP3D workflow assumes web authentication is disabled; Orca's ESP3D integration may not work correctly if the web UI requires login.
+- Tested on 2026-03-29: Orca's built-in `ESP3D` `Upload and Print` path reached the printer but did not leave the uploaded file visible on the Marlin SD card. Marlin then failed `M23` with `open failed` for the expected 8.3 filename, and `M20 L` over ESP3D websocket confirmed the file was not present in the SD listing afterward.
+- Live ESP3D probing on 2026-03-29 showed this TinyBee setup is using ESP3D's direct-SD `/upload` route, not the `/upload_serial` route that Orca hardcodes for `ESP3D`. The working browser UI creates directories and uploads to SD through `/upload`, and its print button sends `M23 <current_path><filename>` followed by `M24`.
+- `StarGraber` now uses a local helper, [`tools/orca_esp3d_up_and_p_proxy.py`](/home/fopor/Software/marlin/Marlin-2.1.3-b2/tools/orca_esp3d_up_and_p_proxy.py), with Orca `print_host` set to `127.0.0.1:18889`. The helper accepts Orca's `/upload_serial` request, forwards the file to ESP3D's direct-SD `/upload` endpoint, forces uploads into `/up_and_p/`, and rewrites Orca's later `M23` to `/up_and_p/<filename>` before letting `M24` start the print.
+- Local desktop startup now goes through [`tools/start_orca_with_esp3d_proxy.py`](/home/fopor/Software/marlin/Marlin-2.1.3-b2/tools/start_orca_with_esp3d_proxy.py), and the user launcher at `~/.local/share/applications/orca.desktop` points to that wrapper instead of directly to the AppImage. The wrapper auto-starts the local proxy when Orca opens and also exposes `--ensure-proxy-only` and `--stop-proxy` management commands.
+- During helper verification on 2026-03-29, the live ESP3D direct-SD endpoint later started returning `{"status":"No SD Card"}` on `/upload?path=/up_and_p/`, and `M21` did not immediately recover it. End-to-end helper verification was therefore blocked by printer SD availability, not by a local Python startup failure.
 
 ## Known Troubleshooting Context
 
