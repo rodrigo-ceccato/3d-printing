@@ -1,46 +1,48 @@
 {
-    "complete_print_exhaust_fan_speed": [
-        "100"
-    ],
-    "default_filament_colour": [
-        "#FFFFFF"
-    ],
-    "during_print_exhaust_fan_speed": [
-        "100"
-    ],
-    "filament_flow_ratio": [
-        "0.99"
-    ],
-    "filament_settings_id": [
-        "3D Fila branco"
-    ],
-    "filament_vendor": [
-        "3D Fila"
-    ],
-    "from": "User",
-    "hot_plate_temp_initial_layer": [
-        "67"
-    ],
-    "inherits": "Generic PLA @System",
-    "is_custom_defined": "0",
-    "name": "3D Fila branco",
-    "nozzle_temperature": [
-        "200"
-    ],
-    "nozzle_temperature_initial_layer": [
-        "215"
-    ],
-    "nozzle_temperature_range_high": [
-        "220"
-    ],
-    "nozzle_temperature_range_low": [
-        "205"
-    ],
-    "pressure_advance": [
-        "0.052"
-    ],
-    "slow_down_layer_time": [
-        "1"
-    ],
-    "version": "2.3.0.3"
+	"complete_print_exhaust_fan_speed": [
+		"100"
+	],
+	"default_filament_colour": [
+		"#FFFFFF"
+	],
+	"during_print_exhaust_fan_speed": [
+		"100"
+	],
+	"filament_extruder_variant": [
+		"Direct Drive Standard"
+	],
+	"filament_flow_ratio": [
+		"0.99"
+	],
+	"filament_settings_id": [
+		"3D Fila branco"
+	],
+	"filament_vendor": [
+		"3D Fila"
+	],
+	"from": "User",
+	"hot_plate_temp_initial_layer": [
+		"67"
+	],
+	"inherits": "Generic PLA @System",
+	"name": "3D Fila branco",
+	"nozzle_temperature": [
+		"195"
+	],
+	"nozzle_temperature_initial_layer": [
+		"215"
+	],
+	"nozzle_temperature_range_high": [
+		"220"
+	],
+	"nozzle_temperature_range_low": [
+		"205"
+	],
+	"pressure_advance": [
+		"0.052"
+	],
+	"slow_down_layer_time": [
+		"1"
+	],
+	"version": "2.3.0.3"
 }

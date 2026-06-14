@@ -33,6 +33,7 @@ This repository contains Marlin firmware and OrcaSlicer presets for a DIY Graber
 - Hotend heatsink fan is confirmed strong and always on; it is wired directly to the `300W PSU`.
 - Measured hotend/heatsink temperatures during troubleshooting: with the nozzle set to `220C`, the heatsink measured about `36C` at the top, `41C` in the middle, and about `73C` near the last fin close to the block.
 - External spot measurement near the nozzle showed about `202C` when the printer reported `220C`, but this should be treated cautiously because surface nozzle readings can under-read depending on measurement method and emissivity.
+- Intermittent XY layer shifts were also reported (often on diagonal/high-speed travel). On 2026-04-03, the chosen first response was a moderate slicer-only reduction (not aggressive), keeping Marlin firmware upper bounds unchanged: `StarGraber` machine XY max speed set to `300`, machine XY max acceleration set to `2500`, start G-code changed from `M204 S10000 T1000` to `M204 P1500 T1200`, and `0.20mm Star Standard` reduced to `travel_speed 240`, `travel_acceleration 1400`, `inner_wall_acceleration 1300`, `outer_wall_acceleration 800`.
 
 ## Maintenance Rule
 
