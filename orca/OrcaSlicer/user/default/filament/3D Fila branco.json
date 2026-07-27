@@ -27,7 +27,7 @@
 	"inherits": "Generic PLA @System",
 	"name": "3D Fila branco",
 	"nozzle_temperature": [
-		"195"
+		"200"
 	],
 	"nozzle_temperature_initial_layer": [
 		"215"
