@@ -5,6 +5,9 @@ This repository contains Marlin firmware and OrcaSlicer presets for a DIY Graber
 ## Printer Context
 
 - Board: MKS TinyBee
+- Current configured nozzle-to-probe offset: `{ 21, -17, -1.93 }`.
+- The active `StarGraber` Orca end G-code parks at `X10 Y195`, corresponding to `Y_MAX_POS - 5` with the firmware's `Y_MAX_POS` of `200`, so the bed is presented toward the user.
+- Marlin's `NOZZLE_PARK_FEATURE` is enabled with `NOZZLE_PARK_POINT { 10, (Y_MAX_POS - 5), 10 }`, and `EVENT_GCODE_SD_ABORT` runs `G27` so stopping an SD print uses that park point instead of homing XY.
 - Firmware constraint: do not recommend `LIN_ADVANCE`; this board/setup does not support it in the user's environment.
 - The repo owner is the only user of this repository, so tracking live OrcaSlicer user presets is intentional.
 - `mks_tinybee` builds with `ESP3D_WIFISUPPORT` should keep `AsyncTCP` pinned to `me-no-dev/AsyncTCP@3.3.2` and `ESP Async WebServer` pinned to `sbkila/ESP Async WebServer@1.2.3`; newer unpinned packages can break against the old ESP32 Arduino core with missing watchdog config symbols such as `CONFIG_ESP_TASK_WDT_TIMEOUT_S`.
@@ -20,6 +23,7 @@ This repository contains Marlin firmware and OrcaSlicer presets for a DIY Graber
 - `StarGraber` now uses a local helper, [`tools/orca_esp3d_up_and_p_proxy.py`](/home/fopor/Software/marlin/Marlin-2.1.3-b2/tools/orca_esp3d_up_and_p_proxy.py), with Orca `print_host` set to `127.0.0.1:18889`. The helper accepts Orca's `/upload_serial` request, forwards the file to ESP3D's direct-SD `/upload` endpoint, forces uploads into `/up_and_p/`, and rewrites Orca's later `M23` to `/up_and_p/<filename>` before letting `M24` start the print.
 - Local desktop startup now goes through [`tools/start_orca_with_esp3d_proxy.py`](/home/fopor/Software/marlin/Marlin-2.1.3-b2/tools/start_orca_with_esp3d_proxy.py), and the user launcher at `~/.local/share/applications/orca.desktop` points to that wrapper instead of directly to the AppImage. The wrapper auto-starts the local proxy when Orca opens and also exposes `--ensure-proxy-only` and `--stop-proxy` management commands.
 - During helper verification on 2026-03-29, the live ESP3D direct-SD endpoint later started returning `{"status":"No SD Card"}` on `/upload?path=/up_and_p/`, and `M21` did not immediately recover it. End-to-end helper verification was therefore blocked by printer SD availability, not by a local Python startup failure.
+- A reusable full calibration program is tracked at [`utility_gcode/stargraber_ubl_calibration.gcode`](/home/fopor/Software/marlin/Marlin-2.1.3-b2/utility_gcode/stargraber_ubl_calibration.gcode). It performs a five-minute heated soak with display progress, homes, runs `G34`, creates and smart-fills the 10x10 UBL mesh, stores it in slot 0, saves EEPROM settings, and parks the printer.
 
 ## Known Troubleshooting Context
 

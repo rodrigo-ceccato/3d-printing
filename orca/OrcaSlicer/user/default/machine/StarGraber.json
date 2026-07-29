@@ -6,7 +6,7 @@
 	"host_type": "esp3d",
 	"inherits": "MyMarlin 0.4 nozzle",
 	"input_shaping_type": "ZV",
-	"machine_end_gcode": "G1 E-1.0 F2100 ; retract\nG92 E0.0\nG1{if max_layer_z < max_print_height} Z{z_offset+min(max_layer_z+30, max_print_height)}{endif} E-34.0 F720 ; move print head up & retract filament\nG4 ; wait\nM104 S0 ; turn off temperature\nM140 S0 ; turn off heatbed\nM107 ; turn off fan\nG1 X0 Y187 F3000 ; park print head\nM84 ; disable motors",
+	"machine_end_gcode": "G1 E-1.0 F2100 ; retract\nG92 E0.0\nG1{if max_layer_z < max_print_height} Z{z_offset+min(max_layer_z+30, max_print_height)}{endif} E-34.0 F720 ; move print head up & retract filament\nG4 ; wait\nM104 S0 ; turn off temperature\nM140 S0 ; turn off heatbed\nM107 ; turn off fan\nG1 X10 Y195 F3000 ; park at X10, Y_MAX_POS - 5\nM84 ; disable motors",
 	"machine_max_acceleration_x": [
 		"5000",
 		"2500"
