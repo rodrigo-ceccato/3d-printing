@@ -1629,7 +1629,7 @@ void setup() {
   #endif
 
   #if HAS_SERVICE_INTERVALS && DISABLED(DWIN_CREALITY_LCD)
-    SETUP_RUN(ui.reset_status(true));  // Show service messages or keep current status
+    SETUP_RUN(ui.reset_status());  // Show service messages or the loaded print time
   #endif
 
   #if ENABLED(MAX7219_DEBUG)

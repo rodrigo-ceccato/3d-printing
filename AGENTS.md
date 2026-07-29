@@ -5,6 +5,7 @@ This repository contains Marlin firmware and OrcaSlicer presets for a DIY Graber
 ## Printer Context
 
 - Board: MKS TinyBee
+- Marlin `PRINTCOUNTER` is enabled with a top-level LCD information menu. The idle status line shows accumulated print time, with reminders to check/tighten screws every 100 print hours and lubricate the motion system every 200 print hours. `PRINTCOUNTER_SAVE_INTERVAL` is `0`, so statistics save at job end without periodic EEPROM writes that could disrupt the TinyBee's I2S stepper stream.
 - Current configured nozzle-to-probe offset: `{ 21, -17, -1.93 }`.
 - The active `StarGraber` Orca end G-code parks at `X10 Y195`, corresponding to `Y_MAX_POS - 5` with the firmware's `Y_MAX_POS` of `200`, so the bed is presented toward the user.
 - Marlin's `NOZZLE_PARK_FEATURE` is enabled with `NOZZLE_PARK_POINT { 10, (Y_MAX_POS - 5), 10 }`, and `EVENT_GCODE_SD_ABORT` runs `G27` so stopping an SD print uses that park point instead of homing XY.

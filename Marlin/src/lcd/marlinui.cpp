@@ -1492,6 +1492,14 @@ void MarlinUI::host_notify(const char * const cstr) {
       else if (print_job_timer.needsService(3)) msg = F("> " SERVICE_NAME_3 "!");
     #endif
 
+    #if ENABLED(PRINTCOUNTER)
+      else if (!no_welcome) {
+        const uint32_t total_minutes = print_job_timer.getStats().printTime / 60UL;
+        status_printf(-1, F("Printed: %luh %02lum"), total_minutes / 60UL, total_minutes % 60UL);
+        return;
+      }
+    #endif
+
     else if (!no_welcome) msg = GET_TEXT_F(WELCOME_MSG);
 
     else if (ENABLED(STATUS_DO_CLEAR_EMPTY))
