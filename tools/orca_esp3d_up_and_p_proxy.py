@@ -34,6 +34,7 @@ except ImportError:  # pragma: no cover - Python 3.13+ without legacy-cgi
 
 CONNECT_TIMEOUT = 5
 READ_TIMEOUT = 300
+DEFAULT_UPLOAD_TIMEOUT = 30 * 60
 DEFAULT_LISTEN_HOST = "127.0.0.1"
 DEFAULT_LISTEN_PORT = 18889
 DEFAULT_PRINTER_HOST = "192.168.3.13"
@@ -69,6 +70,7 @@ def target_parent_and_leaf(target_dir: str) -> tuple[str, str]:
 class ProxyConfig:
     printer_base_url: str
     target_dir: str
+    upload_timeout: int
     verbose: bool = False
 
     def printer_url(self, path: str) -> str:
@@ -122,6 +124,7 @@ class OrcaESP3DProxyHandler(BaseHTTPRequestHandler):
                     "status": "ok",
                     "printer_base_url": self.server.config.printer_base_url,
                     "target_dir": self.server.config.target_dir,
+                    "upload_timeout": self.server.config.upload_timeout,
                     "last_uploaded_filename": self.server.state.last_uploaded_filename,
                 },
             )
@@ -203,13 +206,22 @@ class OrcaESP3DProxyHandler(BaseHTTPRequestHandler):
                 self.server.config.printer_url("/upload"),
                 data=data,
                 files=files,
-                timeout=(CONNECT_TIMEOUT, READ_TIMEOUT),
+                # urllib3 keeps the connect timeout on the socket while it
+                # sends the request body. ESP3D can stop reading for more than
+                # five seconds while flushing a large file to the SD card, so
+                # uploads need a longer write timeout than small GET requests.
+                timeout=(
+                    self.server.config.upload_timeout,
+                    self.server.config.upload_timeout,
+                ),
             )
             self.raise_for_known_printer_state(response)
         except PrinterProxyError as exc:
+            print(f"Printer upload rejected for {upload.filename}: {exc}", flush=True)
             self.send_text(503, f"{exc}\n")
             return
         except requests.RequestException as exc:
+            print(f"Printer upload failed for {upload.filename}: {exc}", flush=True)
             self.send_text(502, f"Printer upload proxy failed: {exc}\n")
             return
         finally:
@@ -388,15 +400,24 @@ def parse_args() -> argparse.Namespace:
         default=DEFAULT_TARGET_DIR,
         help="SD directory that should receive every Orca upload.",
     )
+    parser.add_argument(
+        "--upload-timeout",
+        type=int,
+        default=DEFAULT_UPLOAD_TIMEOUT,
+        help="Maximum seconds without upload socket progress before failing.",
+    )
     parser.add_argument("--verbose", action="store_true", help="Print proxied actions to stderr.")
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
+    if args.upload_timeout <= 0:
+        raise SystemExit("--upload-timeout must be greater than zero")
     config = ProxyConfig(
         printer_base_url=f"http://{args.printer_host}",
         target_dir=normalize_target_dir(args.target_dir),
+        upload_timeout=args.upload_timeout,
         verbose=args.verbose,
     )
 

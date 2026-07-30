@@ -21,6 +21,7 @@ DEFAULT_PROXY_HOST = "127.0.0.1"
 DEFAULT_PROXY_PORT = 18889
 DEFAULT_PRINTER_HOST = "192.168.3.13"
 DEFAULT_TARGET_DIR = "/up_and_p/"
+DEFAULT_UPLOAD_TIMEOUT = 30 * 60
 DEFAULT_ORCA_BIN = "/home/fopor/Software/OrcaSlicer_Linux_AppImage_V2.3.0.AppImage"
 STARTUP_TIMEOUT = 5.0
 RETRY_INTERVAL = 0.2
@@ -56,10 +57,16 @@ def load_proxy_status(host: str, port: int) -> dict[str, Any] | None:
         return None
 
 
-def proxy_matches(status: dict[str, Any], printer_host: str, target_dir: str) -> bool:
+def proxy_matches(
+    status: dict[str, Any],
+    printer_host: str,
+    target_dir: str,
+    upload_timeout: int,
+) -> bool:
     return (
         status.get("printer_base_url") == f"http://{printer_host}"
         and status.get("target_dir") == target_dir
+        and status.get("upload_timeout") == upload_timeout
     )
 
 
@@ -141,11 +148,18 @@ def stop_proxy(host: str, port: int) -> bool:
     return False
 
 
-def start_proxy(host: str, port: int, printer_host: str, target_dir: str, verbose: bool) -> str:
+def start_proxy(
+    host: str,
+    port: int,
+    printer_host: str,
+    target_dir: str,
+    upload_timeout: int,
+    verbose: bool,
+) -> str:
     expected_printer = f"http://{printer_host}"
     status = load_proxy_status(host, port)
     if status:
-        if proxy_matches(status, printer_host, target_dir):
+        if proxy_matches(status, printer_host, target_dir, upload_timeout):
             return "reused"
         raise RuntimeError(
             f"Port {port} is already serving a different proxy instance: "
@@ -169,6 +183,8 @@ def start_proxy(host: str, port: int, printer_host: str, target_dir: str, verbos
                 printer_host,
                 "--target-dir",
                 target_dir,
+                "--upload-timeout",
+                str(upload_timeout),
                 *(["--verbose"] if verbose else []),
             ],
             stdout=log,
@@ -180,7 +196,10 @@ def start_proxy(host: str, port: int, printer_host: str, target_dir: str, verbos
     deadline = time.time() + STARTUP_TIMEOUT
     while time.time() < deadline:
         status = load_proxy_status(host, port)
-        if status and status.get("printer_base_url") == expected_printer and status.get("target_dir") == target_dir:
+        if (
+            status
+            and proxy_matches(status, printer_host, target_dir, upload_timeout)
+        ):
             return "started"
         if proc.poll() is not None:
             break
@@ -204,6 +223,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--proxy-host", default=DEFAULT_PROXY_HOST, help="Local proxy listen host.")
     parser.add_argument("--proxy-port", type=int, default=DEFAULT_PROXY_PORT, help="Local proxy listen port.")
     parser.add_argument("--target-dir", default=DEFAULT_TARGET_DIR, help="SD folder used for uploads.")
+    parser.add_argument(
+        "--upload-timeout",
+        type=int,
+        default=DEFAULT_UPLOAD_TIMEOUT,
+        help="Maximum seconds without upload socket progress before failing.",
+    )
     parser.add_argument("--verbose-proxy", action="store_true", help="Run the proxy in verbose logging mode.")
     parser.add_argument("--ensure-proxy-only", action="store_true", help="Ensure the proxy is running and then exit.")
     parser.add_argument("--stop-proxy", action="store_true", help="Stop the background proxy and exit.")
@@ -214,6 +239,9 @@ def parse_args() -> argparse.Namespace:
 def main() -> int:
     args = parse_args()
     target_dir = normalize_target_dir(args.target_dir)
+    if args.upload_timeout <= 0:
+        print("--upload-timeout must be greater than zero", file=sys.stderr)
+        return 2
 
     if args.stop_proxy:
         stopped = stop_proxy(args.proxy_host, args.proxy_port)
@@ -226,6 +254,7 @@ def main() -> int:
             port=args.proxy_port,
             printer_host=args.printer_host,
             target_dir=target_dir,
+            upload_timeout=args.upload_timeout,
             verbose=args.verbose_proxy,
         )
     except RuntimeError as exc:
