@@ -10,6 +10,8 @@ This repository contains Marlin firmware and OrcaSlicer presets for a DIY Graber
 - The active `StarGraber` Orca end G-code parks at `X10 Y195`, corresponding to `Y_MAX_POS - 5` with the firmware's `Y_MAX_POS` of `200`, so the bed is presented toward the user.
 - Marlin's `NOZZLE_PARK_FEATURE` is enabled with `NOZZLE_PARK_POINT { 10, (Y_MAX_POS - 5), 10 }`, and `EVENT_GCODE_SD_ABORT` runs `G27` so stopping an SD print uses that park point instead of homing XY.
 - Firmware constraint: do not recommend `LIN_ADVANCE`; this board/setup does not support it in the user's environment.
+- Marlin's lightweight ZV input shaping (`INPUT_SHAPING_X` and `INPUT_SHAPING_Y`, configured with `M593`) compiles for this TinyBee's I2S stepper stream: a 2026-08-04 `mks_tinybee` build with both enabled succeeded at 58,164 B RAM (11.1%). Marlin emits an upstream warning that this combination is untested, so validate it with supervised low-risk motion before relying on it. Prefer it over beta `FT_MOTION`; tune X and Y independently before relying on it.
+- Marlin 2.1.3-b3 was the latest upstream 2.1.3 beta checked on 2026-08-04. It still emits the same input-shaping/I2S untested warning, so upgrading from b2 does not resolve that uncertainty. Its TinyBee-relevant changes are limited to an ADC-reference warning fix, ESP32/I2S refactoring, and ESP3DLib build compatibility; do not migrate solely for input shaping.
 - The repo owner is the only user of this repository, so tracking live OrcaSlicer user presets is intentional.
 - `mks_tinybee` builds with `ESP3D_WIFISUPPORT` should keep `AsyncTCP` pinned to `me-no-dev/AsyncTCP@3.3.2` and `ESP Async WebServer` pinned to `sbkila/ESP Async WebServer@1.2.3`; newer unpinned packages can break against the old ESP32 Arduino core with missing watchdog config symbols such as `CONFIG_ESP_TASK_WDT_TIMEOUT_S`.
 
@@ -36,12 +38,8 @@ This repository contains Marlin firmware and OrcaSlicer presets for a DIY Graber
 
 ## Known Troubleshooting Context
 
-- Current print issue under investigation: strong stringing on every print.
-- Lowering nozzle temperature helps, but stringing is still severe even around `180C` with PLA.
-- The same filament prints well on another printer.
-- The nozzle has already been changed.
-- Extruder grip has already been checked and is good.
-- Retraction experiments already tried with no meaningful effect: retraction speed, retraction length, and z-hop on/off.
+- The prior severe all-print stringing issue is resolved after replacing the heatblock. Before that repair, lowering nozzle temperature helped only partially (even around `180C` with PLA); the same filament worked on another printer; changing the nozzle, verifying extruder grip, and varying retraction speed/length and z-hop did not meaningfully help.
+- Prior missed XY steps are now much improved after increasing stepper-driver current and adding a fan. The exact current values and fan placement have not yet been recorded.
 - Overall print quality is otherwise good.
 - Hotend heatsink fan is confirmed strong and always on; it is wired directly to the `300W PSU`.
 - Measured hotend/heatsink temperatures during troubleshooting: with the nozzle set to `220C`, the heatsink measured about `36C` at the top, `41C` in the middle, and about `73C` near the last fin close to the block.
