@@ -31,6 +31,7 @@
 	"sparse_infill_density": "10%",
 	"sparse_infill_pattern": "cubic",
 	"sparse_infill_speed": "100",
+	"skirt_type": "perobject",
 	"support_interface_top_layers": "3",
 	"support_on_build_plate_only": "1",
 	"support_speed": "70",

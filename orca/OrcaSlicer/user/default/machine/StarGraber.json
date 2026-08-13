@@ -1,6 +1,6 @@
 {
-	"extruder_clearance_height_to_lid": "80",
-	"extruder_clearance_radius": "46",
+	"extruder_clearance_height_to_lid": "150",
+	"extruder_clearance_radius": "80",
 	"from": "User",
 	"gcode_flavor": "marlin2",
 	"host_type": "esp3d",
@@ -28,12 +28,14 @@
 	"print_host": "127.0.0.1:18889",
 	"print_host_webui": "http://192.168.3.13/",
 	"printable_area": [
-		"0x-6",
-		"192x-6",
-		"192x199",
-		"0x199"
+		"0x5",
+		"190x5",
+		"190x200",
+		"0x200"
 	],
 	"printable_height": "150",
+	"printer_structure": "i3",
+	"printing_by_object_gcode": "",
 	"printer_extruder_id": [
 		"1"
 	],
