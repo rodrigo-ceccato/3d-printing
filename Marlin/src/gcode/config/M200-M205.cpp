@@ -307,12 +307,12 @@ void GcodeSuite::M205() {
   #if HAS_JUNCTION_DEVIATION
     if (parser.seenval('J')) {
       const float junc_dev = parser.value_linear_units();
-      if (WITHIN(junc_dev, 0.01f, 0.3f)) {
+      if (WITHIN(junc_dev, 0.001f, 0.3f)) {
         planner.junction_deviation_mm = junc_dev;
         TERN_(HAS_LINEAR_E_JERK, planner.recalculate_max_e_jerk());
       }
       else
-        SERIAL_ERROR_MSG("?J out of range (0.01 to 0.3)");
+        SERIAL_ERROR_MSG("?J out of range (0.001 to 0.3)");
     }
   #endif
   #if ENABLED(CLASSIC_JERK)

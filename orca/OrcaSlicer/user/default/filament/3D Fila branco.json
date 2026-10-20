@@ -5,17 +5,26 @@
 	"default_filament_colour": [
 		"#FFFFFF"
 	],
+	"dont_slow_down_outer_wall": [
+		"1"
+	],
 	"during_print_exhaust_fan_speed": [
+		"100"
+	],
+	"fan_cooling_layer_time": [
+		"50"
+	],
+	"filament_cost": [
 		"100"
 	],
 	"filament_extruder_variant": [
 		"Direct Drive Standard"
 	],
 	"filament_flow_ratio": [
-		"0.99"
+		"0.97"
 	],
 	"filament_max_volumetric_speed": [
-		"10"
+		"8"
 	],
 	"filament_settings_id": [
 		"3D Fila branco"
@@ -25,30 +34,27 @@
 	],
 	"from": "User",
 	"hot_plate_temp": [
-		"70"
+		"50"
 	],
 	"hot_plate_temp_initial_layer": [
-		"75"
+		"65"
 	],
 	"inherits": "Generic PLA @System",
 	"name": "3D Fila branco",
 	"nozzle_temperature": [
-		"215"
+		"195"
 	],
 	"nozzle_temperature_initial_layer": [
-		"225"
+		"195"
 	],
 	"nozzle_temperature_range_high": [
 		"220"
-	],
-	"nozzle_temperature_range_low": [
-		"205"
 	],
 	"pressure_advance": [
 		"0.052"
 	],
 	"slow_down_layer_time": [
-		"1"
+		"15"
 	],
 	"version": "2.3.0.3"
 }
