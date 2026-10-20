@@ -1,4 +1,5 @@
 {
+	"bridge_speed": "10",
 	"brim_width": "15",
 	"combine_brims": "1",
 	"default_acceleration": "1200",
@@ -25,6 +26,9 @@
 	"name": "0.16mm Star Standard",
 	"outer_wall_jerk": "6",
 	"outer_wall_speed": "40",
+	"overhang_1_4_speed": "35",
+	"overhang_2_4_speed": "30",
+	"overhang_3_4_speed": "20",
 	"print_extruder_id": [
 		"1"
 	],

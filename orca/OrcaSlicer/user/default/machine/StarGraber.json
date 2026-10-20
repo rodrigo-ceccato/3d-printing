@@ -1,6 +1,7 @@
 {
 	"extruder_clearance_height_to_lid": "150",
 	"extruder_clearance_radius": "80",
+	"fan_speedup_overhangs": "0",
 	"from": "User",
 	"gcode_flavor": "marlin2",
 	"host_type": "esp3d",
@@ -63,6 +64,7 @@
 	"nozzle_volume": [
 		"10"
 	],
+	"part_cooling_fan_min_pwm": "50",
 	"print_host": "127.0.0.1:18889",
 	"print_host_webui": "http://192.168.3.13/",
 	"printable_area": [
@@ -84,7 +86,7 @@
 		"Top Only"
 	],
 	"retraction_length": [
-		"1"
+		"0.8"
 	],
 	"retraction_speed": [
 		"35"

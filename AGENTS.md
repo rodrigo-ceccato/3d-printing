@@ -40,6 +40,8 @@ This repository contains Marlin firmware and OrcaSlicer presets for a DIY Graber
 
 ## Known Troubleshooting Context
 
+- On 2026-10-19, the user described remaining issues as slight under-extrusion immediately after travel moves and excessive overhang speed. No new sliced G-code or photo has established the cause; preserve the committed baseline while testing overhang slowdown and retraction separately.
+
 - On 2026-10-19, the user reported printer setup is nearly complete and requested a committed snapshot of the current configurations. Saved presets now include `0.16mm Star Standard` (0.16 mm layers, classic walls, gyroid infill, 10% general infill/wall overlap); the 0.20 mm profile sets 15% general infill/wall overlap. Neither profile explicitly sets the separate top/bottom overlap. The saved `3D Fila branco` profile now uses 0.97 flow, 195C nozzle for both initial/subsequent layers, and 65/50C bed temperatures. These are observed saved settings, not newly validated print results.
 
 - Latest close-up on 2026-10-18 shows fine horizontal striations across the lower sloping Benchy hull, with some variation in prominence. The earlier distinct deck-height ridge is not conspicuous in this view, consistent with the user reporting it resolved. The photo does not establish periodic Z banding or distinguish ordinary layer stair-stepping from small extrusion variations. Suggested next isolated comparison is 0.16 mm layers, keeping the successful 15% top/bottom overlap, ironing OFF, current cooling/speeds/flow, and 0.8 mm top-shell thickness. No smaller-layer print result is available yet.

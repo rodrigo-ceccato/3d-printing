@@ -50,6 +50,9 @@
 	"nozzle_temperature_range_high": [
 		"220"
 	],
+	"overhang_fan_threshold": [
+		"0%"
+	],
 	"pressure_advance": [
 		"0.052"
 	],
